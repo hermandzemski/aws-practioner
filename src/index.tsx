@@ -31,6 +31,7 @@ const root = createRoot(container!);
 axios.interceptors.response.use(
   response => response,
   error => {
+    debugger;
     if (error.response.status === 401) {
       alert('You are unauthorized');
     }
@@ -38,6 +39,8 @@ axios.interceptors.response.use(
     if (error.response.status === 403) {
       alert('Forbidden to upload file');
     }
+
+    return Promise.reject();
   });
 
 root.render(
