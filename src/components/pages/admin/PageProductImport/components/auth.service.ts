@@ -3,5 +3,5 @@ export function getAuthToken() {
 
     console.log('token:', authorizationToken);
 
-    return authorizationToken;
+    return authorizationToken ? `Basic ${authorizationToken}` : undefined;
 }

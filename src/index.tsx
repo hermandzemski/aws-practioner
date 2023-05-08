@@ -38,6 +38,8 @@ axios.interceptors.response.use(
     if (error.response.status === 403) {
       alert('Forbidden to upload file');
     }
+
+    return Promise.reject();
   });
 
 root.render(
