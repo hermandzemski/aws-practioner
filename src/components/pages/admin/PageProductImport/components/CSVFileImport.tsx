@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { getAuthToken } from "./auth.service";
 
 type CSVFileImportProps = {
   url: string;
@@ -31,17 +32,27 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     }
 
     // Get the presigned URL
+    const token = getAuthToken();
+    const authHeaher = token 
+      ? {
+          Authorization: token
+        } 
+      : undefined;
+
     const fileUrl = await axios({
       method: "GET",
       url: `${url}/${encodeURIComponent(file.name)}`,
+      headers: authHeaher
     }).then(response => response.data.url);
 
     console.log("File to upload: ", file.name);
     console.log("Uploading to: ", fileUrl);
+
     const result = await fetch(fileUrl, {
       method: "PUT",
       body: file,
     });
+
     console.log("Result: ", result);
     setFile(undefined);
   };
